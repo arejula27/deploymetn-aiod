@@ -1,0 +1,19 @@
+---
+- hosts: all
+  tasks:
+      - name: install python docker module
+        pip:
+            name: docker
+      - name: Create a network
+        community.docker.docker_network:
+            name: aiod
+      - name: Attach bbdd container to network
+        community.docker.docker_network:
+            name: aiod
+            connected:
+                - node1
+            appends: true
+      - name: Clone api repository
+        git:
+            repo: https://github.com/aiondemand/AIOD-rest-api.git
+            dest: /home/iarejula
